@@ -16,7 +16,6 @@
     overflow: hidden;
   }
 
-  /* ── Sidebar ─────────────────────────────────────── */
   #sidebar {
     width: 220px;
     min-width: 220px;
@@ -25,7 +24,7 @@
     padding: 20px 16px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 18px;
     overflow-y: auto;
   }
 
@@ -53,20 +52,9 @@
     margin-bottom: 4px;
   }
 
-  .control-label {
-    font-size: 12px;
-    color: #aaa;
-    flex: 1;
-  }
-
-  .control-value {
-    font-size: 11px;
-    color: #666;
-    width: 36px;
-    text-align: right;
-  }
-
-  .slider-wrap { margin-bottom: 12px; }
+  .control-label { font-size: 12px; color: #aaa; flex: 1; }
+  .control-value { font-size: 11px; color: #666; width: 36px; text-align: right; }
+  .slider-wrap { margin-bottom: 11px; }
 
   input[type="range"] {
     -webkit-appearance: none;
@@ -77,11 +65,9 @@
     outline: none;
     margin-top: 4px;
   }
-
   input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 13px;
-    height: 13px;
+    width: 13px; height: 13px;
     border-radius: 50%;
     background: #fff;
     cursor: pointer;
@@ -94,131 +80,109 @@
     margin-bottom: 12px;
   }
 
-  .toggle {
-    position: relative;
-    width: 32px;
-    height: 18px;
-  }
-
+  .toggle { position: relative; width: 32px; height: 18px; }
   .toggle input { opacity: 0; width: 0; height: 0; }
-
   .toggle-slider {
-    position: absolute;
-    inset: 0;
-    background: #333;
-    border-radius: 9px;
-    cursor: pointer;
-    transition: background 0.2s;
+    position: absolute; inset: 0;
+    background: #333; border-radius: 9px;
+    cursor: pointer; transition: background 0.2s;
   }
-
   .toggle-slider:before {
-    content: "";
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    left: 3px;
-    top: 3px;
-    background: #fff;
-    border-radius: 50%;
+    content: ""; position: absolute;
+    width: 12px; height: 12px;
+    left: 3px; top: 3px;
+    background: #fff; border-radius: 50%;
     transition: transform 0.2s;
   }
-
   .toggle input:checked + .toggle-slider { background: #e85d2c; }
   .toggle input:checked + .toggle-slider:before { transform: translateX(14px); }
 
-  /* Shape picker */
-  .shape-picker {
+  /* Pattern shape grid */
+  .pattern-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+  }
+
+  .pattern-btn {
+    padding: 7px 4px;
+    background: #252525;
+    border: 1.5px solid transparent;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 11px;
+    color: #888;
+    text-align: center;
+    letter-spacing: 0.03em;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+  }
+
+  .pattern-btn:hover { background: #2e2e2e; color: #bbb; }
+  .pattern-btn.active { border-color: #e85d2c; color: #fff; background: #2e2e2e; }
+
+  /* Dot style */
+  .dot-style-grid {
     display: flex;
     gap: 6px;
     flex-wrap: wrap;
   }
 
-  .shape-btn {
-    width: 34px;
-    height: 34px;
-    background: #2a2a2a;
-    border: 2px solid transparent;
+  .dot-btn {
+    width: 34px; height: 34px;
+    background: #252525;
+    border: 1.5px solid transparent;
     border-radius: 8px;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     transition: border-color 0.15s, background 0.15s;
   }
+  .dot-btn:hover { background: #2e2e2e; }
+  .dot-btn.active { border-color: #e85d2c; background: #2e2e2e; }
+  .dot-btn svg { width: 16px; height: 16px; fill: #888; }
+  .dot-btn.active svg { fill: #fff; }
 
-  .shape-btn:hover { background: #333; }
-  .shape-btn.active { border-color: #fff; background: #333; }
-
-  .shape-btn svg { width: 16px; height: 16px; fill: #aaa; }
-  .shape-btn.active svg { fill: #fff; }
-
-  .color-swatches {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-
+  /* Color swatches */
+  .color-swatches { display: flex; gap: 6px; flex-wrap: wrap; }
   .swatch {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    cursor: pointer;
-    border: 2px solid transparent;
+    width: 22px; height: 22px; border-radius: 50%;
+    cursor: pointer; border: 2px solid transparent;
     transition: border-color 0.15s, transform 0.15s;
   }
-
   .swatch:hover { transform: scale(1.15); }
   .swatch.active { border-color: #fff; }
 
   hr { border: none; border-top: 1px solid #2a2a2a; }
 
-  /* ── Main canvas area ─────────────────────────────── */
+  /* Main */
   #main {
     flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     padding: 40px;
     position: relative;
   }
 
   #card {
     position: relative;
-    border-radius: 20px;
-    overflow: hidden;
+    border-radius: 20px; overflow: hidden;
     box-shadow: 0 30px 80px rgba(0,0,0,0.6);
     width: min(560px, 90vw);
     aspect-ratio: 16/10;
     cursor: crosshair;
   }
 
-  #c {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
+  #c { display: block; width: 100%; height: 100%; }
 
   .card-label {
-    position: absolute;
-    bottom: 22px;
-    left: 24px;
+    position: absolute; bottom: 22px; left: 24px;
     pointer-events: none;
   }
-
   .card-label .top { font-size: 11px; color: rgba(255,255,255,0.55); letter-spacing: 0.06em; }
   .card-label .title { font-size: 22px; font-weight: 700; color: #fff; margin-top: 2px; letter-spacing: -0.01em; }
 
-  /* Click-to-place hint */
   #hint {
-    position: absolute;
-    bottom: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 11px;
-    color: #444;
-    letter-spacing: 0.05em;
-    pointer-events: none;
-    white-space: nowrap;
+    position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%);
+    font-size: 11px; color: #3a3a3a; letter-spacing: 0.05em;
+    pointer-events: none; white-space: nowrap;
   }
 </style>
 </head>
@@ -231,7 +195,6 @@
   <!-- Wave -->
   <div>
     <div class="section-title">Wave</div>
-
     <div class="slider-wrap">
       <div class="control-row">
         <div class="control-label">Amplitude</div>
@@ -239,7 +202,6 @@
       </div>
       <input type="range" id="amplitude" min="0" max="1" step="0.01" value="0.5">
     </div>
-
     <div class="slider-wrap">
       <div class="control-row">
         <div class="control-label">Frequency</div>
@@ -247,7 +209,6 @@
       </div>
       <input type="range" id="frequency" min="0.1" max="4" step="0.05" value="1.2">
     </div>
-
     <div class="slider-wrap">
       <div class="control-row">
         <div class="control-label">Rings</div>
@@ -255,7 +216,6 @@
       </div>
       <input type="range" id="rings" min="4" max="40" step="1" value="18">
     </div>
-
     <div class="slider-wrap">
       <div class="control-row">
         <div class="control-label">Dot Size</div>
@@ -270,7 +230,6 @@
   <!-- Placement -->
   <div>
     <div class="section-title">Placement</div>
-
     <div class="slider-wrap">
       <div class="control-row">
         <div class="control-label">Offset X</div>
@@ -278,7 +237,6 @@
       </div>
       <input type="range" id="offsetx" min="-100" max="100" step="1" value="0">
     </div>
-
     <div class="slider-wrap">
       <div class="control-row">
         <div class="control-label">Offset Y</div>
@@ -286,15 +244,13 @@
       </div>
       <input type="range" id="offsety" min="-100" max="100" step="1" value="0">
     </div>
-
     <div class="slider-wrap">
       <div class="control-row">
         <div class="control-label">Scale</div>
-        <div class="control-value" id="val-scale">1.0</div>
+        <div class="control-value" id="val-scale">1</div>
       </div>
       <input type="range" id="scale" min="0.2" max="2" step="0.05" value="1">
     </div>
-
     <div class="slider-wrap">
       <div class="control-row">
         <div class="control-label">Rotation</div>
@@ -306,26 +262,43 @@
 
   <hr>
 
-  <!-- Dot Shape -->
+  <!-- Pattern Shape -->
   <div>
-    <div class="section-title">Dot Shape</div>
-    <div class="shape-picker" id="shapes">
-      <div class="shape-btn active" data-shape="circle" title="Circle">
+    <div class="section-title">Pattern Shape</div>
+    <div class="pattern-grid" id="patterns">
+      <div class="pattern-btn active" data-pattern="orb">Orb</div>
+      <div class="pattern-btn" data-pattern="star">Star</div>
+      <div class="pattern-btn" data-pattern="bloom">Bloom</div>
+      <div class="pattern-btn" data-pattern="heart">Heart</div>
+      <div class="pattern-btn" data-pattern="pinwheel">Pinwheel</div>
+      <div class="pattern-btn" data-pattern="burst">Burst</div>
+      <div class="pattern-btn" data-pattern="cosmic">Cosmic</div>
+      <div class="pattern-btn" data-pattern="cat">Cat</div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Dot Style -->
+  <div>
+    <div class="section-title">Dot Style</div>
+    <div class="dot-style-grid" id="dotstyles">
+      <div class="dot-btn active" data-dot="circle" title="Circle">
         <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/></svg>
       </div>
-      <div class="shape-btn" data-shape="square" title="Square">
-        <svg viewBox="0 0 16 16"><rect x="2" y="2" width="12" height="12" rx="2"/></svg>
+      <div class="dot-btn" data-dot="square" title="Square">
+        <svg viewBox="0 0 16 16"><rect x="2" y="2" width="12" height="12" rx="1.5"/></svg>
       </div>
-      <div class="shape-btn" data-shape="diamond" title="Diamond">
+      <div class="dot-btn" data-dot="diamond" title="Diamond">
         <svg viewBox="0 0 16 16"><polygon points="8,1 15,8 8,15 1,8"/></svg>
       </div>
-      <div class="shape-btn" data-shape="triangle" title="Triangle">
+      <div class="dot-btn" data-dot="triangle" title="Triangle">
         <svg viewBox="0 0 16 16"><polygon points="8,1 15,15 1,15"/></svg>
       </div>
-      <div class="shape-btn" data-shape="cross" title="Cross">
+      <div class="dot-btn" data-dot="cross" title="Cross">
         <svg viewBox="0 0 16 16"><rect x="6" y="1" width="4" height="14" rx="1"/><rect x="1" y="6" width="14" height="4" rx="1"/></svg>
       </div>
-      <div class="shape-btn" data-shape="star" title="Star">
+      <div class="dot-btn" data-dot="star" title="Star">
         <svg viewBox="0 0 16 16"><polygon points="8,1 10,6 15,6 11,9.5 12.5,15 8,12 3.5,15 5,9.5 1,6 6,6"/></svg>
       </div>
     </div>
@@ -343,7 +316,6 @@
         <span class="toggle-slider"></span>
       </label>
     </div>
-
     <div class="slider-wrap">
       <div class="control-row">
         <div class="control-label">Speed</div>
@@ -369,7 +341,7 @@
   </div>
 </div>
 
-<!-- ── Card ──────────────────────────────────────── -->
+<!-- Card -->
 <div id="main">
   <div id="card">
     <canvas id="c"></canvas>
@@ -378,34 +350,243 @@
       <div class="title">Library Card</div>
     </div>
   </div>
-  <div id="hint">Click card to reposition · Drag to move</div>
+  <div id="hint">Click · drag to reposition</div>
 </div>
 
 <script>
+// ── Precompute polar lookup tables for complex shapes ──────────────────────
+
+function buildPolarTable(paramFn, samples = 512) {
+  const table = new Float32Array(samples).fill(0);
+  const count = new Int32Array(samples).fill(0);
+  const N = samples * 10;
+  for (let i = 0; i < N; i++) {
+    const tt = (i / N) * 2 * Math.PI;
+    const { x, y } = paramFn(tt);
+    const r = Math.sqrt(x * x + y * y);
+    const a = ((Math.atan2(y, x) % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+    const idx = Math.floor(a / (2 * Math.PI) * samples) % samples;
+    table[idx] += r;
+    count[idx]++;
+  }
+  let maxR = 0;
+  for (let i = 0; i < samples; i++) {
+    if (count[i] > 0) table[i] /= count[i];
+    if (table[i] > maxR) maxR = table[i];
+  }
+  if (maxR > 0) for (let i = 0; i < samples; i++) table[i] /= maxR;
+  // Smooth fill any gaps
+  for (let pass = 0; pass < 6; pass++) {
+    for (let i = 0; i < samples; i++) {
+      if (count[i] === 0) {
+        table[i] = (table[(i - 1 + samples) % samples] + table[(i + 1) % samples]) / 2;
+      }
+    }
+  }
+  return table;
+}
+
+function sampleTable(table, angle) {
+  const a   = ((angle % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+  const idx = (a / (2 * Math.PI)) * table.length;
+  const i   = Math.floor(idx) % table.length;
+  const j   = (i + 1) % table.length;
+  return table[i] * (1 - (idx - Math.floor(idx))) + table[j] * (idx - Math.floor(idx));
+}
+
+// Heart (classic mathematical heart curve, point facing down in canvas coords)
+const HEART_TABLE = buildPolarTable(tt => ({
+  x:  16 * Math.pow(Math.sin(tt), 3),
+  y: -(13 * Math.cos(tt) - 5 * Math.cos(2 * tt) - 2 * Math.cos(3 * tt) - Math.cos(4 * tt)),
+}));
+
+// Cat head: oval + Gaussian ear bumps
+const CAT_TABLE = (() => {
+  const S = 512;
+  const table = new Float32Array(S);
+  for (let i = 0; i < S; i++) {
+    const a = (i / S) * 2 * Math.PI;
+    // Oval (slightly wider than tall)
+    const ovalA = 1.0, ovalB = 0.82;
+    const oval = (ovalA * ovalB) / Math.sqrt(
+      Math.pow(ovalB * Math.cos(a), 2) + Math.pow(ovalA * Math.sin(a), 2)
+    );
+    // Ears at top: canvas y-up = angle -π/2; ears ≈ ±0.72 rad from that
+    const earH = 0.52, earW = 0.14;
+    const ears = [-Math.PI / 2 + 0.72, -Math.PI / 2 - 0.72];
+    let bump = 0;
+    for (const ea of ears) {
+      for (const off of [0, 2 * Math.PI, -2 * Math.PI]) {
+        bump = Math.max(bump, earH * Math.exp(-Math.pow((a - ea + off) / earW, 2) / 2));
+      }
+    }
+    table[i] = oval + bump;
+  }
+  let mx = 0;
+  for (let i = 0; i < S; i++) if (table[i] > mx) mx = table[i];
+  for (let i = 0; i < S; i++) table[i] /= mx;
+  return table;
+})();
+
+// ── State ──────────────────────────────────────────────────────────────────
+const state = {
+  amplitude    : 0.5,
+  frequency    : 1.2,
+  rings        : 18,
+  dotSize      : 1.8,
+  speed        : 0.6,
+  animated     : true,
+  bgColor      : "#c94a1e",
+  dotColor     : "#f5c49a",
+  offsetX      : 0,
+  offsetY      : 0,
+  scale        : 1.0,
+  rotation     : 0,
+  patternShape : "orb",
+  dotStyle     : "circle",
+};
+
+let animT = 0;
+
+// ── Shape radius ───────────────────────────────────────────────────────────
+function getShapeR(angle, baseR, ringNorm) {
+  switch (state.patternShape) {
+    case "orb":
+      return baseR;
+
+    case "star":
+      return baseR * Math.max(0.05, 0.70 + 0.30 * Math.cos(5 * angle));
+
+    case "bloom":
+      return baseR * (0.48 + 0.52 * Math.abs(Math.cos(3 * angle)));
+
+    case "burst": {
+      const spikes = 12;
+      return baseR * (0.60 + 0.40 * Math.pow(Math.abs(Math.cos(spikes / 2 * angle)), 0.28));
+    }
+
+    case "cosmic": {
+      const d = 0.50
+        + 0.22 * Math.cos(3 * angle + 0.5)
+        + 0.15 * Math.cos(5 * angle + 1.2)
+        + 0.09 * Math.cos(7 * angle + 2.3)
+        + 0.04 * Math.cos(11 * angle + 0.8);
+      return baseR * Math.max(0.08, d);
+    }
+
+    case "heart":
+      return baseR * sampleTable(HEART_TABLE, angle) * 1.06;
+
+    case "cat":
+      return baseR * sampleTable(CAT_TABLE, angle) * 1.06;
+
+    case "pinwheel":
+      return baseR; // handled via angle offset in the draw loop
+
+    default:
+      return baseR;
+  }
+}
+
+// ── Individual dot drawing ─────────────────────────────────────────────────
 const canvas = document.getElementById("c");
 const ctx    = canvas.getContext("2d");
 const card   = document.getElementById("card");
 
-// ── State ──────────────────────────────────────────
-let state = {
-  amplitude : 0.5,
-  frequency : 1.2,
-  rings     : 18,
-  dotSize   : 1.8,
-  speed     : 0.6,
-  animated  : true,
-  bgColor   : "#c94a1e",
-  dotColor  : "#f5c49a",
-  offsetX   : 0,
-  offsetY   : 0,
-  scale     : 1.0,
-  rotation  : 0,
-  shape     : "circle",
-};
+function drawDot(x, y, sz) {
+  ctx.save();
+  ctx.translate(x, y);
+  const s = Math.max(0.3, sz);
+  switch (state.dotStyle) {
+    case "circle":
+      ctx.beginPath(); ctx.arc(0, 0, s, 0, Math.PI * 2); ctx.fill();
+      break;
+    case "square":
+      ctx.fillRect(-s, -s, s * 2, s * 2);
+      break;
+    case "diamond":
+      ctx.beginPath();
+      ctx.moveTo(0, -s * 1.3); ctx.lineTo(s, 0); ctx.lineTo(0, s * 1.3); ctx.lineTo(-s, 0);
+      ctx.closePath(); ctx.fill();
+      break;
+    case "triangle":
+      ctx.beginPath();
+      ctx.moveTo(0, -s * 1.3); ctx.lineTo(s * 1.2, s * 0.9); ctx.lineTo(-s * 1.2, s * 0.9);
+      ctx.closePath(); ctx.fill();
+      break;
+    case "cross": {
+      const h = s * 0.38;
+      ctx.fillRect(-s, -h, s * 2, h * 2);
+      ctx.fillRect(-h, -s, h * 2, s * 2);
+      break;
+    }
+    case "star": {
+      const outer = s * 1.3, inner = s * 0.5;
+      ctx.beginPath();
+      for (let i = 0; i < 5; i++) {
+        const oA = (i * 2 * Math.PI / 5) - Math.PI / 2;
+        const iA = oA + Math.PI / 5;
+        if (i === 0) ctx.moveTo(Math.cos(oA) * outer, Math.sin(oA) * outer);
+        else         ctx.lineTo(Math.cos(oA) * outer, Math.sin(oA) * outer);
+        ctx.lineTo(Math.cos(iA) * inner, Math.sin(iA) * inner);
+      }
+      ctx.closePath(); ctx.fill();
+      break;
+    }
+  }
+  ctx.restore();
+}
 
-let t = 0;
+// ── Main draw ──────────────────────────────────────────────────────────────
+function draw() {
+  const dpr = window.devicePixelRatio || 1;
+  const W   = canvas.width  / dpr;
+  const H   = canvas.height / dpr;
 
-// ── Resize ─────────────────────────────────────────
+  ctx.fillStyle = state.bgColor;
+  ctx.fillRect(0, 0, W, H);
+
+  ctx.save();
+  ctx.translate(W / 2 + state.offsetX, H / 2 + state.offsetY);
+  ctx.rotate(state.rotation * Math.PI / 180);
+  ctx.scale(state.scale, state.scale);
+
+  const maxR  = Math.min(W, H) * 0.48;
+  const rings = state.rings;
+  ctx.fillStyle = state.dotColor;
+
+  for (let ring = 1; ring <= rings; ring++) {
+    const baseR    = (ring / rings) * maxR;
+    const ringNorm = ring / rings;
+    const dots     = Math.max(6, Math.round(2 * Math.PI * baseR / (maxR / rings) * 0.9));
+
+    // Pinwheel: each ring's dots start at a rotated offset
+    const pinOffset = state.patternShape === "pinwheel" ? ringNorm * Math.PI * 2.6 : 0;
+
+    for (let d = 0; d < dots; d++) {
+      const baseAngle = (d / dots) * Math.PI * 2 + pinOffset;
+      const shapeR    = getShapeR(baseAngle, baseR, ringNorm);
+
+      const wave = Math.sin(
+        ring * state.frequency + d * (state.frequency * 0.25) + animT
+      ) * (maxR / rings) * state.amplitude * 1.4;
+
+      const rr = shapeR + wave;
+      const x  = Math.cos(baseAngle) * rr;
+      const y  = Math.sin(baseAngle) * rr;
+
+      const sz = state.dotSize * (0.6 + 0.8 * (
+        (wave / ((maxR / rings) * state.amplitude * 1.4 + 0.001) + 1) / 2
+      ));
+
+      drawDot(x, y, sz);
+    }
+  }
+
+  ctx.restore();
+}
+
+// ── Resize ─────────────────────────────────────────────────────────────────
 function resize() {
   const rect = card.getBoundingClientRect();
   const dpr  = window.devicePixelRatio || 1;
@@ -415,151 +596,43 @@ function resize() {
   draw();
 }
 
-// ── Shape drawing ──────────────────────────────────
-function drawDot(x, y, sz) {
-  ctx.save();
-  ctx.translate(x, y);
-  const s = Math.max(0.3, sz);
-
-  switch (state.shape) {
-    case "circle":
-      ctx.beginPath();
-      ctx.arc(0, 0, s, 0, Math.PI * 2);
-      ctx.fill();
-      break;
-
-    case "square":
-      ctx.fillRect(-s, -s, s * 2, s * 2);
-      break;
-
-    case "diamond":
-      ctx.beginPath();
-      ctx.moveTo(0, -s * 1.3);
-      ctx.lineTo(s * 1.0, 0);
-      ctx.lineTo(0,  s * 1.3);
-      ctx.lineTo(-s * 1.0, 0);
-      ctx.closePath();
-      ctx.fill();
-      break;
-
-    case "triangle":
-      ctx.beginPath();
-      ctx.moveTo(0, -s * 1.3);
-      ctx.lineTo(s * 1.2,  s * 0.9);
-      ctx.lineTo(-s * 1.2, s * 0.9);
-      ctx.closePath();
-      ctx.fill();
-      break;
-
-    case "cross": {
-      const t2 = s * 0.38;
-      ctx.fillRect(-s, -t2, s * 2, t2 * 2);
-      ctx.fillRect(-t2, -s, t2 * 2, s * 2);
-      break;
-    }
-
-    case "star": {
-      const outer = s * 1.3, inner = s * 0.55;
-      ctx.beginPath();
-      for (let i = 0; i < 5; i++) {
-        const oA = (i * 2 * Math.PI / 5) - Math.PI / 2;
-        const iA = oA + Math.PI / 5;
-        if (i === 0) ctx.moveTo(Math.cos(oA)*outer, Math.sin(oA)*outer);
-        else ctx.lineTo(Math.cos(oA)*outer, Math.sin(oA)*outer);
-        ctx.lineTo(Math.cos(iA)*inner, Math.sin(iA)*inner);
-      }
-      ctx.closePath();
-      ctx.fill();
-      break;
-    }
-  }
-  ctx.restore();
-}
-
-// ── Draw ───────────────────────────────────────────
-function draw() {
-  const W = canvas.width  / (window.devicePixelRatio || 1);
-  const H = canvas.height / (window.devicePixelRatio || 1);
-
-  ctx.fillStyle = state.bgColor;
-  ctx.fillRect(0, 0, W, H);
-
-  // Apply placement: offset + rotation around the user-defined center
-  const cx = W / 2 + state.offsetX;
-  const cy = H / 2 + state.offsetY;
-
-  ctx.save();
-  ctx.translate(cx, cy);
-  ctx.rotate(state.rotation * Math.PI / 180);
-  ctx.scale(state.scale, state.scale);
-
-  const maxR  = Math.min(W, H) * 0.48;
-  const rings = state.rings;
-
-  ctx.fillStyle = state.dotColor;
-
-  for (let ring = 1; ring <= rings; ring++) {
-    const r = (ring / rings) * maxR;
-    const dots = Math.max(6, Math.round(2 * Math.PI * r / (maxR / rings) * 0.9));
-
-    for (let d = 0; d < dots; d++) {
-      const baseAngle = (d / dots) * Math.PI * 2;
-
-      const wave = Math.sin(
-        ring * state.frequency + d * (state.frequency * 0.25) + t
-      ) * (maxR / rings) * state.amplitude * 1.4;
-
-      const rr = r + wave;
-      const x  = Math.cos(baseAngle) * rr;
-      const y  = Math.sin(baseAngle) * rr;
-
-      const sz = state.dotSize * (0.6 + 0.8 * ((wave / ((maxR / rings) * state.amplitude * 1.4 + 0.001) + 1) / 2));
-
-      drawDot(x, y, sz);
-    }
-  }
-
-  ctx.restore();
-}
-
-// ── Animation loop ─────────────────────────────────
-function loop() {
+// ── Animation loop ─────────────────────────────────────────────────────────
+(function loop() {
   if (state.animated) {
-    t += 0.018 * state.speed;
+    animT += 0.018 * state.speed;
     draw();
   }
   requestAnimationFrame(loop);
-}
+})();
 
-// ── Slider helper ──────────────────────────────────
-function bind(id, key, transform) {
+// ── Slider helper ──────────────────────────────────────────────────────────
+function bindSlider(id, key) {
   const el  = document.getElementById(id);
   const val = document.getElementById("val-" + id);
   el.addEventListener("input", () => {
-    const v = parseFloat(el.value);
-    state[key] = transform ? transform(v) : v;
-    if (val) val.textContent = id === "rotation" ? v + "°" : v;
+    state[key] = parseFloat(el.value);
+    if (val) val.textContent = id === "rotation" ? el.value + "°" : el.value;
     if (!state.animated) draw();
   });
 }
 
-bind("amplitude", "amplitude");
-bind("frequency", "frequency");
-bind("rings",     "rings");
-bind("dotsize",   "dotSize");
-bind("speed",     "speed");
-bind("offsetx",   "offsetX");
-bind("offsety",   "offsetY");
-bind("scale",     "scale");
-bind("rotation",  "rotation");
+bindSlider("amplitude", "amplitude");
+bindSlider("frequency", "frequency");
+bindSlider("rings",     "rings");
+bindSlider("dotsize",   "dotSize");
+bindSlider("speed",     "speed");
+bindSlider("offsetx",   "offsetX");
+bindSlider("offsety",   "offsetY");
+bindSlider("scale",     "scale");
+bindSlider("rotation",  "rotation");
 
-// ── Animated toggle ────────────────────────────────
+// ── Animated toggle ────────────────────────────────────────────────────────
 document.getElementById("animated").addEventListener("change", e => {
   state.animated = e.target.checked;
   if (!state.animated) draw();
 });
 
-// ── Color swatches ─────────────────────────────────
+// ── Color swatches ─────────────────────────────────────────────────────────
 document.getElementById("swatches").addEventListener("click", e => {
   const sw = e.target.closest(".swatch");
   if (!sw) return;
@@ -570,50 +643,53 @@ document.getElementById("swatches").addEventListener("click", e => {
   if (!state.animated) draw();
 });
 
-// ── Shape picker ───────────────────────────────────
-document.getElementById("shapes").addEventListener("click", e => {
-  const btn = e.target.closest(".shape-btn");
+// ── Pattern shape buttons ──────────────────────────────────────────────────
+document.getElementById("patterns").addEventListener("click", e => {
+  const btn = e.target.closest(".pattern-btn");
   if (!btn) return;
-  document.querySelectorAll(".shape-btn").forEach(b => b.classList.remove("active"));
+  document.querySelectorAll(".pattern-btn").forEach(b => b.classList.remove("active"));
   btn.classList.add("active");
-  state.shape = btn.dataset.shape;
+  state.patternShape = btn.dataset.pattern;
   if (!state.animated) draw();
 });
 
-// ── Click / drag to reposition on card ────────────
-let dragging = false;
-let dragStart = null;
-let offsetAtDrag = null;
+// ── Dot style buttons ──────────────────────────────────────────────────────
+document.getElementById("dotstyles").addEventListener("click", e => {
+  const btn = e.target.closest(".dot-btn");
+  if (!btn) return;
+  document.querySelectorAll(".dot-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  state.dotStyle = btn.dataset.dot;
+  if (!state.animated) draw();
+});
+
+// ── Drag to reposition ─────────────────────────────────────────────────────
+let dragging = false, dragStart = null, offsetAtDrag = null;
 
 card.addEventListener("mousedown", e => {
   dragging = true;
-  dragStart = { x: e.clientX, y: e.clientY };
+  dragStart    = { x: e.clientX, y: e.clientY };
   offsetAtDrag = { x: state.offsetX, y: state.offsetY };
 });
-
 window.addEventListener("mousemove", e => {
   if (!dragging) return;
   const rect = card.getBoundingClientRect();
-  const scaleX = canvas.width  / (window.devicePixelRatio || 1) / rect.width;
-  const scaleY = canvas.height / (window.devicePixelRatio || 1) / rect.height;
-  const dx = (e.clientX - dragStart.x) * scaleX;
-  const dy = (e.clientY - dragStart.y) * scaleY;
-  state.offsetX = Math.round(offsetAtDrag.x + dx);
-  state.offsetY = Math.round(offsetAtDrag.y + dy);
-  // Sync sliders
-  document.getElementById("offsetx").value = state.offsetX;
-  document.getElementById("offsety").value = state.offsetY;
+  const dpr  = window.devicePixelRatio || 1;
+  const sx   = (canvas.width  / dpr) / rect.width;
+  const sy   = (canvas.height / dpr) / rect.height;
+  state.offsetX = Math.round(offsetAtDrag.x + (e.clientX - dragStart.x) * sx);
+  state.offsetY = Math.round(offsetAtDrag.y + (e.clientY - dragStart.y) * sy);
+  document.getElementById("offsetx").value           = state.offsetX;
+  document.getElementById("offsety").value           = state.offsetY;
   document.getElementById("val-offsetx").textContent = state.offsetX;
   document.getElementById("val-offsety").textContent = state.offsetY;
   if (!state.animated) draw();
 });
-
 window.addEventListener("mouseup", () => { dragging = false; });
 
-// ── Init ───────────────────────────────────────────
+// ── Init ───────────────────────────────────────────────────────────────────
 window.addEventListener("resize", resize);
 resize();
-loop();
 </script>
 </body>
 </html>
