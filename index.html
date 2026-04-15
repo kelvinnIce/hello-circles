@@ -153,6 +153,23 @@
 
   hr { border: none; border-top: 1px solid #2a2a2a; }
 
+  /* Export button */
+  #export-btn {
+    width: 100%;
+    padding: 10px;
+    background: #e85d2c;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+  #export-btn:hover  { background: #ff6d38; }
+  #export-btn:active { transform: scale(0.97); }
+
   /* Main */
   #main {
     flex: 1;
@@ -339,6 +356,9 @@
       <div class="swatch" style="background:#7c1c1c" data-bg="#7c1c1c" data-dot="#f5b8b8"></div>
     </div>
   </div>
+
+  <hr>
+  <button id="export-btn">Export SVG</button>
 </div>
 
 <!-- Card -->
@@ -686,6 +706,107 @@ window.addEventListener("mousemove", e => {
   if (!state.animated) draw();
 });
 window.addEventListener("mouseup", () => { dragging = false; });
+
+// ── SVG Export ─────────────────────────────────────────────────────────────
+
+// Round to 2dp to keep file size small
+function n(v) { return Math.round(v * 100) / 100; }
+
+function dotToSVG(x, y, sz, fill) {
+  const s = Math.max(0.3, sz);
+  switch (state.dotStyle) {
+    case "circle":
+      return `<circle cx="${n(x)}" cy="${n(y)}" r="${n(s)}" fill="${fill}"/>`;
+
+    case "square":
+      return `<rect x="${n(x-s)}" y="${n(y-s)}" width="${n(s*2)}" height="${n(s*2)}" fill="${fill}"/>`;
+
+    case "diamond": {
+      const pts = `${n(x)},${n(y-s*1.3)} ${n(x+s)},${n(y)} ${n(x)},${n(y+s*1.3)} ${n(x-s)},${n(y)}`;
+      return `<polygon points="${pts}" fill="${fill}"/>`;
+    }
+
+    case "triangle": {
+      const pts = `${n(x)},${n(y-s*1.3)} ${n(x+s*1.2)},${n(y+s*0.9)} ${n(x-s*1.2)},${n(y+s*0.9)}`;
+      return `<polygon points="${pts}" fill="${fill}"/>`;
+    }
+
+    case "cross": {
+      const h = s * 0.38;
+      return `<rect x="${n(x-s)}" y="${n(y-h)}" width="${n(s*2)}" height="${n(h*2)}" fill="${fill}"/>`
+           + `<rect x="${n(x-h)}" y="${n(y-s)}" width="${n(h*2)}" height="${n(s*2)}" fill="${fill}"/>`;
+    }
+
+    case "star": {
+      const outer = s * 1.3, inner = s * 0.5;
+      const pts = [];
+      for (let i = 0; i < 5; i++) {
+        const oA = (i * 2 * Math.PI / 5) - Math.PI / 2;
+        const iA = oA + Math.PI / 5;
+        pts.push(`${n(x + Math.cos(oA)*outer)},${n(y + Math.sin(oA)*outer)}`);
+        pts.push(`${n(x + Math.cos(iA)*inner)},${n(y + Math.sin(iA)*inner)}`);
+      }
+      return `<polygon points="${pts.join(" ")}" fill="${fill}"/>`;
+    }
+  }
+  return "";
+}
+
+function exportSVG() {
+  const dpr  = window.devicePixelRatio || 1;
+  const W    = canvas.width  / dpr;
+  const H    = canvas.height / dpr;
+  const cx   = W / 2 + state.offsetX;
+  const cy   = H / 2 + state.offsetY;
+  const fill = state.dotColor;
+
+  const parts = [];
+  parts.push(`<svg xmlns="http://www.w3.org/2000/svg" width="${n(W)}" height="${n(H)}" viewBox="0 0 ${n(W)} ${n(H)}">`);
+  parts.push(`<rect width="${n(W)}" height="${n(H)}" fill="${state.bgColor}"/>`);
+  parts.push(`<g transform="translate(${n(cx)},${n(cy)}) rotate(${state.rotation}) scale(${state.scale})">`);
+
+  const maxR  = Math.min(W, H) * 0.48;
+  const rings = state.rings;
+
+  for (let ring = 1; ring <= rings; ring++) {
+    const baseR    = (ring / rings) * maxR;
+    const ringNorm = ring / rings;
+    const dots     = Math.max(6, Math.round(2 * Math.PI * baseR / (maxR / rings) * 0.9));
+    const pinOffset = state.patternShape === "pinwheel" ? ringNorm * Math.PI * 2.6 : 0;
+
+    for (let d = 0; d < dots; d++) {
+      const baseAngle = (d / dots) * Math.PI * 2 + pinOffset;
+      const shapeR    = getShapeR(baseAngle, baseR, ringNorm);
+
+      const wave = Math.sin(
+        ring * state.frequency + d * (state.frequency * 0.25) + animT
+      ) * (maxR / rings) * state.amplitude * 1.4;
+
+      const rr = shapeR + wave;
+      const x  = Math.cos(baseAngle) * rr;
+      const y  = Math.sin(baseAngle) * rr;
+
+      const sz = state.dotSize * (0.6 + 0.8 * (
+        (wave / ((maxR / rings) * state.amplitude * 1.4 + 0.001) + 1) / 2
+      ));
+
+      parts.push(dotToSVG(x, y, sz, fill));
+    }
+  }
+
+  parts.push("</g>");
+  parts.push("</svg>");
+
+  const blob = new Blob([parts.join("\n")], { type: "image/svg+xml" });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement("a");
+  a.href     = url;
+  a.download = `hello-circles-${state.patternShape}.svg`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+document.getElementById("export-btn").addEventListener("click", exportSVG);
 
 // ── Init ───────────────────────────────────────────────────────────────────
 window.addEventListener("resize", resize);
